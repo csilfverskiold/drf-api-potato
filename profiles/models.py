@@ -21,7 +21,7 @@ class Profile(models.Model):
         return f"{self.owner}'s profile"
 
 
-# Signal set to create a Profile model, triggered every time a User is created.
+# Signal set to create a Profile model, triggered every time a User is created
 
 
 def create_profile(sender, instance, created, **kwargs):

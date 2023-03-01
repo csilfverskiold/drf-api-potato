@@ -6,9 +6,27 @@ from .serializers import RecipeSerializer
 
 
 class RecipeList(APIView):
+    serializer_class = RecipeSerializer
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly
+    ]
+
     def get(self, request):
         recipes = Recipe.objects.all()
         serializer = RecipeSerializer(
             recipes, many=True, context={'request': request}
         )
         return Response(serializer.data)
+
+    def post(self, request):
+        serializer = RecipeSerializer(
+            data=request.data, context={'request': request}
+        )
+        if serializer.is_valid():
+            serializer.save(owner=request.user)
+            return Response(
+                serializer.data, status=status.HTTP_201_CREATED
+            )
+        return Response(
+            serializer.errors, status=status.HTTP_400_BAD_REQUEST
+        )

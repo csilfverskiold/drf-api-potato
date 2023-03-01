@@ -11,7 +11,7 @@ class Recipe(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=255)
-    category = models.CharField(max_length=255)
+    category = models.CharField(max_length=255, blank=True)
     ingredient = models.TextField(blank=True)
     instruction = models.TextField(blank=True)
     image = models.ImageField(

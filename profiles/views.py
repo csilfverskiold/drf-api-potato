@@ -32,14 +32,14 @@ class ProfileDetail(APIView):
         except Profile.DoesNotExist:
             raise Http404
 
-    def get(self, request, pk):  # Method - Retrieve a profile by id
+    def get(self, request, pk):  # Method - Retrieve a profile
         profile = self.get_object(pk)
         serializer = ProfileSerializer(
             profile, context={'request': request}
         )
         return Response(serializer.data)
 
-    def put(self, request, pk):
+    def put(self, request, pk):  # Method - Update a profile
         profile = self.get_object(pk)
         serializer = ProfileSerializer(
             profile, data=request.data, context={'request': request}

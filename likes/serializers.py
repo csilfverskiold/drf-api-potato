@@ -8,7 +8,7 @@ class LikeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Like
-        fields = ['id', 'created_at', 'owner', 'post']
+        fields = ['id', 'created_at', 'owner', 'recipe']
 
     def create(self, validated_data):  # Handles creating duplicate likes
         try:

@@ -18,3 +18,7 @@ class CommentSerializer(serializers.ModelSerializer):
             'id', 'owner', 'is_owner', 'profile_id', 'profile_image',
             'recipe', 'created_at', 'updated_at', 'content'
         ]
+
+
+class CommentDetailSerializer(CommentSerializer):
+    recipe = serializers.ReadOnlyField(source='recipe.id')

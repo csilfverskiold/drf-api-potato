@@ -4,7 +4,7 @@ from .models import Profile
 from .serializers import ProfileSerializer
 
 
-class ProfileList(generics.ListAPIView):
+class ProfileList(generics.ListAPIView):  # Create
     """
     List of all profiles
     Profile creation is handled by Django signals
@@ -13,7 +13,7 @@ class ProfileList(generics.ListAPIView):
     serializer_class = ProfileSerializer
 
 
-class ProfileDetail(generics.RetrieveUpdateAPIView):
+class ProfileDetail(generics.RetrieveUpdateAPIView):  # Read/Update
     """
     Retrieve or update a profile (if user logged in)
     """

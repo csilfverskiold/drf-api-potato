@@ -17,7 +17,13 @@ class RecipeList(generics.ListCreateAPIView):  # Create
         saves_count=Count('saves', distinct=True)
     ).order_by('-created_at')
     filter_backends = [
-        filters.OrderingFilter  # Attribute sets fields sortable
+        filters.OrderingFilter,  # Attribute sets fields sortable
+        filters.SearchFilter,  # Attribute allows search specific field
+    ]
+    search_fields = [
+        'owner__username',
+        'title',
+        'category',
     ]
     ordering_fields = [
         'likes_count',

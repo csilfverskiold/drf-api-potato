@@ -1,50 +1,22 @@
-from django.http import Http404
-from rest_framework import status
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from rest_framework import generics
+from drf_api_potato.permissions import IsOwnerOrReadOnly
 from .models import Profile
 from .serializers import ProfileSerializer
-from drf_api_potato.permissions import IsOwnerOrReadOnly
 
 
-class ProfileList(APIView):
+class ProfileList(generics.ListAPIView):
     """
     List of all profiles
     Profile creation is handled by Django signals
     """
-    def get(self, request):
-        profiles = Profile.objects.all()  # Return all profiles
-        serializer = ProfileSerializer(
-            profiles, many=True, context={'request': request}
-        )  # Serialize all profiles
-        return Response(serializer.data)  # Send serialized data in response
-
-
-class ProfileDetail(APIView):
+    queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+
+
+class ProfileDetail(generics.RetrieveUpdateAPIView):
+    """
+    Retrieve or update a profile (if user logged in)
+    """
     permission_classes = [IsOwnerOrReadOnly]
-
-    def get_object(self, pk):  # Method - If profile does not exist
-        try:
-            profile = Profile.objects.get(pk=pk)
-            self.check_object_permissions(self.request, profile)
-            return profile
-        except Profile.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk):  # Method - Retrieve a profile
-        profile = self.get_object(pk)
-        serializer = ProfileSerializer(
-            profile, context={'request': request}
-        )
-        return Response(serializer.data)
-
-    def put(self, request, pk):  # Method - Update a profile
-        profile = self.get_object(pk)
-        serializer = ProfileSerializer(
-            profile, data=request.data, context={'request': request}
-        )
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer

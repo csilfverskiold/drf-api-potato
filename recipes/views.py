@@ -1,5 +1,6 @@
 from django.db.models import Count
 from rest_framework import generics, permissions, filters
+from django_filters.rest_framework import DjangoFilterBackend
 from drf_api_potato.permissions import IsOwnerOrReadOnly
 from .models import Recipe
 from .serializers import RecipeSerializer
@@ -17,8 +18,15 @@ class RecipeList(generics.ListCreateAPIView):  # Create
         saves_count=Count('saves', distinct=True)
     ).order_by('-created_at')
     filter_backends = [
-        filters.OrderingFilter,  # Attribute sets fields sortable
-        filters.SearchFilter,  # Attribute allows search specific field
+        filters.OrderingFilter,  # Sets fields sortable
+        filters.SearchFilter,  # Allows text search specific field
+        DjangoFilterBackend,  # Allows field filter dropdown
+    ]
+    filterset_fields = [
+        'owner__followed__owner__profile',  # User feed
+        'likes__owner__profile',  # Recipes a specific user likes
+        'saves__owner__profile',  # Recipes a specific user saved
+        'owner__profile',  # Recipes of a specific user
     ]
     search_fields = [
         'owner__username',

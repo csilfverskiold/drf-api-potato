@@ -23,5 +23,9 @@ class ProfileDetail(generics.RetrieveUpdateAPIView):  # Read/Update
     Retrieve or update a profile (if user logged in)
     """
     permission_classes = [IsOwnerOrReadOnly]
-    queryset = Profile.objects.all()
+    queryset = Profile.objects.annotate(
+        recipes_count=Count('owner__recipe', distinct=True),
+        followers_count=Count('owner__followed', distinct=True),
+        following_count=Count('owner__following', distinct=True)
+    ).order_by('-created_at')
     serializer_class = ProfileSerializer

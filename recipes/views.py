@@ -27,4 +27,8 @@ class RecipeDetail(generics.RetrieveUpdateDestroyAPIView):  # R/U/D
     """
     serializer_class = RecipeSerializer
     permission_classes = [IsOwnerOrReadOnly]
-    queryset = Recipe.objects.all()
+    queryset = Recipe.objects.annotate(
+        likes_count=Count('likes', distinct=True),
+        comments_count=Count('comment', distinct=True),
+        saves_count=Count('saves', distinct=True)
+    ).order_by('-created_at')

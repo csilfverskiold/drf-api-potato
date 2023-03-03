@@ -1,3 +1,4 @@
+from django.db.models import Count
 from rest_framework import generics, permissions
 from drf_api_potato.permissions import IsOwnerOrReadOnly
 from .models import Recipe
@@ -10,7 +11,11 @@ class RecipeList(generics.ListCreateAPIView):  # Create
     """
     serializer_class = RecipeSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    queryset = Recipe.objects.all()
+    queryset = Recipe.objects.annotate(
+        likes_count=Count('likes', distinct=True),
+        comments_count=Count('comment', distinct=True),
+        saves_count=Count('saves', distinct=True)
+    ).order_by('-created_at')
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

@@ -2,6 +2,15 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+CATEGORY_CHOICES = (
+    ("Breakfast", "Breakfast"),
+    ("Appetizer", "Appetizer"),
+    ("Entrée", "Entrée"),
+    ("Dessert", "Dessert"),
+    ("Snacks", "Snacks"),
+    )
+
+
 class Recipe(models.Model):
     """
     Recipe model, related to 'owner', i.e. a User instance.
@@ -11,7 +20,9 @@ class Recipe(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=255)
-    category = models.CharField(max_length=255, blank=True)
+    category = models.CharField(
+        max_length=50, choices=CATEGORY_CHOICES, default=""
+        )
     ingredient = models.TextField(blank=True)
     instruction = models.TextField(blank=True)
     image = models.ImageField(

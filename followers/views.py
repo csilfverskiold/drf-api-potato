@@ -4,7 +4,7 @@ from .models import Follower
 from .serializers import FollowerSerializer
 
 
-class FollowerList(generics.ListCreateAPIView):
+class FollowerList(generics.ListCreateAPIView):  # Create
     """
     List all followers,
     Create a follower, i.e. follow a user if logged in.
@@ -18,7 +18,7 @@ class FollowerList(generics.ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
 
-class FollowerDetail(generics.RetrieveDestroyAPIView):
+class FollowerDetail(generics.RetrieveDestroyAPIView):  # Read/Delete
     """
     Retrieve a follower
     No Update view, as we either follow or unfollow users

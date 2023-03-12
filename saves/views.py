@@ -4,7 +4,7 @@ from saves.models import Save
 from saves.serializers import SaveSerializer
 
 
-class SaveList(generics.ListCreateAPIView):
+class SaveList(generics.ListCreateAPIView):  # Create
     """
     List saves or create a save/save a recipe if logged in.
     """
@@ -16,7 +16,7 @@ class SaveList(generics.ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
 
-class SaveDetail(generics.RetrieveDestroyAPIView):
+class SaveDetail(generics.RetrieveDestroyAPIView):  # Read/Delete
     """
     Retrieve a save or delete it by id if you own it.
     """

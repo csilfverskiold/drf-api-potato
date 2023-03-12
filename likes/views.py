@@ -4,7 +4,7 @@ from likes.models import Like
 from likes.serializers import LikeSerializer
 
 
-class LikeList(generics.ListCreateAPIView):
+class LikeList(generics.ListCreateAPIView):  # Create
     """
     List likes or create a like if logged in.
     """
@@ -16,7 +16,7 @@ class LikeList(generics.ListCreateAPIView):
         serializer.save(owner=self.request.user)
 
 
-class LikeDetail(generics.RetrieveDestroyAPIView):
+class LikeDetail(generics.RetrieveDestroyAPIView):  # Read/Delete
     """
     Retrieve a like or delete it by id if you own it.
     """

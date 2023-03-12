@@ -5,7 +5,7 @@ from recipes.models import Recipe
 
 class Comment(models.Model):
     """
-    Comment model, related to User and Recipe
+    Comment model class
     """
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)

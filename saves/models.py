@@ -5,9 +5,8 @@ from recipes.models import Recipe
 
 class Save(models.Model):
     """
-    Save model, related to 'owner' and 'recipe'.
-    'owner' is a User instance and 'recipe' is a Recipe instance.
-    'unique_together' makes sure a user can't save the same recipe twice.
+    Save model class
+    'unique_together' makes sure a user can't save the same post twice
     """
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     recipe = models.ForeignKey(

@@ -1,6 +1,6 @@
 # Potato API
 
-This is the API built for the recipe sharing website 'Potato'.
+This is the API built for the recipe sharing website [Potato](https://potato.herokuapp.com/).
 Link to live API site [Potato API](https://drf-api-potato.herokuapp.com/)
 
 ## Table of contents
